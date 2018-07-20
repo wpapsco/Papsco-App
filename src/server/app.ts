@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 import { NextFunction } from '../../node_modules/@types/connect';
+import get from './routes/get'
+import save from './routes/save'
 
 const app = express();
 
@@ -16,16 +18,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//send index.html
-app.get("/", (req, res) => {
-    console.log("wowowow")
-    //res.send({fuck: "you"})
-    console.log("dirnamen: " + __dirname)
-    console.log(path.join(__dirname, '/public/index.html'))
-    res.send({a: 3})
-    //res.sendFile('./public/index.html');
-})
+app.use("/api/get", get)
+app.use("/api/save", save)
 
+//send index.html
+// app.get("/*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "/public/index.html"))
+// })
+
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+})
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     const err = { ...new Error('Not Found'), status: 404 };

@@ -1,8 +1,10 @@
+//change these to change what is in express' req and res params
+
 declare namespace Express {
     export interface Request {
-       property: string
+
     }
     export interface Response {
 
     }
- }
+}
